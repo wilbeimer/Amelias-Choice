@@ -6,6 +6,11 @@
    --brown: #5C3A21;
    --brown-dark: #3E2714;
    --cream: #FBF3E7;
+   
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   position: relative;
 }
 
 * { box-sizing: border-box; }
@@ -28,6 +33,7 @@ body {
 
 .half {
    flex: 1;
+   min-height: 0;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -44,6 +50,32 @@ body {
 
 .half.bottom {
    background: linear-gradient(0deg, var(--green), var(--green-deep));
+}
+
+.decision-form {
+   flex: 1;              
+   min-height: 0;       
+   display: flex;      
+   flex-direction: column;
+}
+
+.halves {
+   flex: 1;
+   min-height: 0;
+   display: flex;
+   flex-direction: column;
+   position: relative;   
+}
+
+.center-line {
+ position: absolute;
+ top: 50%;
+ left: 0;
+ right: 0;
+ height: 6px;
+ background: var(--brown-dark);
+ transform: translateY(-50%);
+ z-index: 5;
 }
 
 .label {
@@ -75,6 +107,44 @@ body {
 }
 
 .option-input::placeholder {
+   color: #999;
+   font-style: italic;
+}
+
+.context {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
+   padding: 16px 24px;
+   background: var(--cream);
+}
+
+.context .label {
+   color: var(--brown-dark);
+}
+
+.context-input {
+   width: min(420px, 82vw);
+   font-size: 1rem;
+   text-align: center;
+   padding: 10px 16px;
+   border-radius: 8px;
+   border: 2px solid rgba(0,0,0,0.15);
+   background: rgba(255,255,255,0.95);
+   color: #2b2b2b;
+   font-family: 'Georgia', serif;
+   outline: none;
+   transition: border-color 0.2s, transform 0.2s;
+}
+
+.context-input:focus {
+   border-color: var(--brown);
+   transform: scale(1.02);
+}
+
+.context-input::placeholder {
    color: #999;
    font-style: italic;
 }
@@ -247,16 +317,12 @@ to { transform: rotate(360deg); }
 }
 
 .hint {
-   position: fixed;
-   bottom: 14px;
-   left: 50%;
-   transform: translateX(-50%);
+   padding: 10px 0 14px;
+   text-align: center;
    color: rgba(255,255,255,0.75);
    font-family: 'Trebuchet MS', sans-serif;
    font-size: 0.75rem;
    letter-spacing: 0.05em;
-   z-index: 20;
-   text-align: center;
    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
 

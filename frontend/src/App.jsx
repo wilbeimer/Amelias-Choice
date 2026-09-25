@@ -2,8 +2,12 @@ import { useState } from 'react'
 import './App.css'
 
 
-function decide(option1, option2, setResult) {
-   fetch(`https://localhost:8000/ask?option1=${encodeURIComponent(option1)}&option2=${encodeURIComponent(option2)}`)
+function decide(option1, option2, context, setResult) {
+   fetch(`http://localhost:8000/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ option1, option2, context })
+   })
       .then(response => response.json())
       .then(json => setResult(json))
       .catch(error => console.error(error));
@@ -29,9 +33,18 @@ function Option({name, value, onChange}) {
    )
 }
 
-function DecideButton({option1, option2, setResult}) {
+function Context({name, value, onChange}) {
    return (
-      <button className="decide-btn" onClick={() => {decide(option1, option2, setResult)}}>DECIDE!</button>
+      <div className='context'>
+         <div className="label">(Optional) Provide Context</div>
+         <input name={name} type="text" value={value} onChange={onChange} className='context-input'/>
+      </div>
+   )
+}
+
+function DecideButton({option1, option2, context, setResult}) {
+   return (
+      <button className="decide-btn" onClick={() => {decide(option1, option2, context, setResult)}}>DECIDE!</button>
    )
 }
 
@@ -45,15 +58,17 @@ function DecisionForm({inputs, setInputs, setResult}) {
 
 
    return (
-      <>
-         <Option name="option1" value={inputs.option1} onChange={handleChange}/>
+      <div className='decision-form'>
+         <div className="halves">
+            <Option name="option1" value={inputs.option1} onChange={handleChange}/>
+            <div className="center-line"></div>
+            <Option name="option2" value={inputs.option2} onChange={handleChange}/>
+         </div>
 
-         <div className="center-line"></div>
+         <Context name="context" value={inputs.context} onChange={handleChange}/>
 
-         <Option name="option2" value={inputs.option2} onChange={handleChange}/>
-
-         <DecideButton option1={inputs.option1} option2={inputs.option2} setResult={setResult}/>
-      </>
+         <DecideButton option1={inputs.option1} option2={inputs.option2} context={inputs.context} setResult={setResult}/>
+      </div>
    )
 }
 
@@ -63,10 +78,9 @@ function Overlay({inputs, result, setResult}) {
       <div className={result ? "overlay active" : "overlay"}>
          <div className="reveal-box">
             <div className="reveal-eyebrow">The decision is</div>
-            <div className="reveal-winner">{result}</div>
-            <div className="reveal-reasoning"></div>
+            <div className="reveal-winner">{result?.winner}</div>
             <div className="reveal-actions">
-               <button className="reveal-btn primary" onClick={() => decide(inputs.option1, inputs.option2, setResult)}>Decide Again</button>
+               <button className="reveal-btn primary" onClick={() => decide(inputs.option1, inputs.option2, inputs.context, setResult)}>Decide Again</button>
                <button className="reveal-btn secondary" onClick={() => setResult(null)}>Close</button>
             </div>
          </div>
@@ -76,7 +90,15 @@ function Overlay({inputs, result, setResult}) {
 
 function App() {
    const [result, setResult] = useState(null)
-   const [inputs, setInputs] = useState({option1: '', option2: ''});
+   const [inputs, setInputs] = useState({option1: '', option2: '', context: ''});
+
+
+   // useEffect(() => {
+   // fetch('http://localhost:8000/')
+   // .then(json => result.json)
+   // .catch(error => console.error(error))
+   // }, [])
+   
 
    return (
       <>
