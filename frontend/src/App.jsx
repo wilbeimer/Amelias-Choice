@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import './App.css'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 function decide(option1, option2, context, setResult) {
-   fetch(`http://localhost:8000/ask`, {
+   fetch(`${API_URL}/ask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ option1, option2, context })
