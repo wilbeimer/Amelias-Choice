@@ -1,9 +1,7 @@
-from laya import Router
-
 #router = Router()  # downloads a checkpoint on first use; Router(preload=True) loads all three up front
 
 
-def make_decision(router: Router, option1: str, option2: str, context: str):
+def make_decision(agent, option1: str, option2: str, context: str):
     state = context
     questions = {
         "decision": {
@@ -16,6 +14,6 @@ def make_decision(router: Router, option1: str, option2: str, context: str):
         },
     }
 
-    result = router.predict(state, questions)
+    result = agent.predict(state, questions)
     return result["answers"]["decision"]["choice"]  # billing
     # print(result["routing"]["model"])                 # english
