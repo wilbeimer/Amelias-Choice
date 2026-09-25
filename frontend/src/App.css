@@ -24,10 +24,7 @@ html, body {
 }
 
 body {
-   position: relative;
-   display: flex;
-   flex-direction: column;
-   height: 100vh;
+   height: 100%;
    width: 100vw;
 }
 
@@ -328,4 +325,30 @@ to { transform: rotate(360deg); }
 
 @media (prefers-reduced-motion: reduce) {
    * { transition: none !important; }
+}
+
+@media (max-width: 480px) {
+  .half {
+    padding: 16px;
+    gap: 10px;
+  }
+  .decide-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 0.85rem;
+  }
+  .option-input {
+    font-size: 1.1rem;
+    padding: 10px 14px;
+  }
+  .context-input {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+  .reveal-winner {
+    font-size: 1.5rem;
+  }
+  .reveal-box {
+    padding: 24px 20px;
+  }
 }

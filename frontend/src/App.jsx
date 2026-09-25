@@ -63,11 +63,12 @@ function DecisionForm({inputs, setInputs, setResult}) {
             <Option name="option1" value={inputs.option1} onChange={handleChange}/>
             <div className="center-line"></div>
             <Option name="option2" value={inputs.option2} onChange={handleChange}/>
+
+            <DecideButton option1={inputs.option1} option2={inputs.option2} context={inputs.context} setResult={setResult}/>
          </div>
 
          <Context name="context" value={inputs.context} onChange={handleChange}/>
 
-         <DecideButton option1={inputs.option1} option2={inputs.option2} context={inputs.context} setResult={setResult}/>
       </div>
    )
 }
